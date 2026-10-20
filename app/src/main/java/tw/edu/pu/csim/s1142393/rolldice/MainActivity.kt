@@ -20,6 +20,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tw.edu.pu.csim.s1142393.rolldice.ui.theme.RolldiceTheme
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.clickable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Dice(modifier: Modifier = Modifier) {
+    var diceNumber by remember { mutableIntStateOf(0) }
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,10 +56,22 @@ fun Dice(modifier: Modifier = Modifier) {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+        val diceImages = listOf(
+            R.drawable.dice0,
+            R.drawable.dice1,
+            R.drawable.dice2,
+            R.drawable.dice3,
+            R.drawable.dice4,
+            R.drawable.dice5,
+            R.drawable.dice6
+        )
 
         Image(
-            painter = painterResource(id = R.drawable.dice0),
-            contentDescription = "Dice"
+            painter = painterResource(id = diceImages[diceNumber]),
+            contentDescription = "Dice",
+            modifier = Modifier.clickable {
+                diceNumber = (1..6).random()
+            }
         )
     }
 }
