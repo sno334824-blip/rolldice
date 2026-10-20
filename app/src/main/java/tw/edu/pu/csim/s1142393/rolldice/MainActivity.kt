@@ -17,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tw.edu.pu.csim.s1142393.rolldice.ui.theme.RolldiceTheme
@@ -69,8 +71,18 @@ fun Dice(modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(id = diceImages[diceNumber]),
             contentDescription = "Dice",
-            modifier = Modifier.clickable {
-                diceNumber = (1..6).random()
+            modifier = Modifier.pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = {
+                        diceNumber = (1..6).random()
+                    },
+                    onDoubleTap = {
+                        diceNumber = 0
+                    },
+                    onLongPress = {
+                        diceNumber = 6
+                    }
+                )
             }
         )
     }
